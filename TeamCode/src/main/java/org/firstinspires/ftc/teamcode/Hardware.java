@@ -17,9 +17,9 @@ public class Hardware {
     public DcMotor rightRearWheel;
     //CM0
     public DcMotor leftRearWheel;
-    //CM1
-    public DcMotor ArmMotor;
     //CM3
+    public DcMotor ArmMotor;
+    //CM2
     public Servo LeftInTake;
     //"CS0"
     public Servo RightInTake;
@@ -37,7 +37,7 @@ public class Hardware {
 
     public void init(HardwareMap hwMap) {
 
-        leftRearWheel = hwMap.get(DcMotor.class, "CM1");
+        leftRearWheel = hwMap.get(DcMotor.class, "CM3");
         leftRearWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftRearWheel.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
