@@ -58,7 +58,7 @@ public class Hardware {
 
         LeftInTake = hwMap.get(Servo.class, "CS0");
 
-        RightInTake = hwMap.get(Servo.class, "CS2");
+        RightInTake = hwMap.get(Servo.class, "CS1");
 
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
