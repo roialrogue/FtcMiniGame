@@ -50,7 +50,7 @@ public class Hardware {
         rightRearWheel.setPower(0);
 
 
-        ArmMotor = hwMap.get(DcMotor.class, "EM3");
+        ArmMotor = hwMap.get(DcMotor.class, "CM2");
         ArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ArmMotor.setDirection(DcMotor.Direction.FORWARD);
         ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
