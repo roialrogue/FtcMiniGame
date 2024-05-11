@@ -38,8 +38,8 @@ public class CameraPiplineBoard extends OpenCvPipeline {
         Mat low = workingMatrix.submat(matArowStart,matArowEnd, matAcolStart, matAcolEnd);
         Mat high = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
 
-        Imgproc.rectangle(workingMatrix, new Rect(matAcolStart, matArowStart, (matAcolEnd - matAcolStart), (matArowEnd - matArowStart)), new Scalar(0, 255, 0));
-        Imgproc.rectangle(workingMatrix, new Rect(matBcolStart,matBrowStart , (matBcolEnd - matBcolStart), (matBrowEnd - matBrowStart)), new Scalar(0, 0, 0));
+        Imgproc.rectangle(workingMatrix, new Rect(matAcolStart, matArowStart, (matAcolEnd - matAcolStart), (matArowEnd - matArowStart)), new Scalar(60, 0, 0));
+        Imgproc.rectangle(workingMatrix, new Rect(matBcolStart,matBrowStart , (matBcolEnd - matBcolStart), (matBrowEnd - matBrowStart)), new Scalar(5, 0, 0));
 
         double lowValue = Core.sumElems(low).val[0] / (low.rows() * low.cols());
         double highValue = Core.sumElems(high).val[0] / (high.rows() * high.cols());
