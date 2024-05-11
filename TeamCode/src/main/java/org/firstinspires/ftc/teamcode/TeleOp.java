@@ -17,6 +17,10 @@ public class TeleOp extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        robot.closeLeft();
+        robot.closeRight();
+        robot.ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
 
         while (opModeIsActive()) {
@@ -31,6 +35,34 @@ public class TeleOp extends LinearOpMode {
 
             robot.leftRearWheel.setPower(leftPower);
             robot.rightRearWheel.setPower(rightPower);
+
+            if(gamepad2.right_bumper) {
+                robot.openRight();
+            } else {
+                robot.closeRight();
+            }
+
+            if(gamepad2.left_bumper) {
+                robot.openLeft();
+            } else {
+                robot.closeLeft();
+            }
+
+            if(gamepad2.x) {
+                robot.openLeft();
+                robot.openRight();
+            } else  {
+                robot.closeLeft();
+                robot.closeRight();
+            }
+
+            if(gamepad2.right_stick_y > .1) {
+                robot.ArmMotor.setPower(1);
+            } else if(gamepad2.right_stick_y < -.1) {
+                robot.ArmMotor.setPower(-1);
+            }
+
+            //a run to position code for arm
         }
     }
 }
