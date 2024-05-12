@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -148,7 +149,7 @@ public class Auto extends LinearOpMode {
 
 //    public void turnDegree(double speed, double degrees, double tolerance, double timeout)
 //    {
-//        double targetHeading = imu.getHeading() + degrees;
+//        double targetHeading = robot.imu.getHeading() + degrees;
 //
 //        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
