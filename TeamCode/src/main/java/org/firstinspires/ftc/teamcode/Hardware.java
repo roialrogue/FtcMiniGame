@@ -71,9 +71,10 @@ public class Hardware {
 
         imu = hwMap.get(BHI260IMU.class,"imu");
         IMU.Parameters parameters = new BHI260IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+                RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
         imu.initialize(parameters);
+        imu.resetYaw();
     }
     public void closeRight() {RightInTake.setPosition(.52);}
     public void closeLeft() {LeftInTake.setPosition(.65);}
