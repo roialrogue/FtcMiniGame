@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsDrive;
 
 @Autonomous(name ="PID Drive")
 public class PIDDrive extends LinearOpMode {
@@ -17,14 +18,15 @@ public class PIDDrive extends LinearOpMode {
     Hardware robot = Hardware.getInstance();
     FtcDashboard dashboard = FtcDashboard.getInstance();
     double integralSum = 0;
-    double Kp = 0;
-    double Ki = 0;
-    double Kd = 0;
+    double Kp = PIDConstantsDrive. Kp;
+    double Ki = PIDConstantsDrive.Ki;
+    double Kd = PIDConstantsDrive.Kd;
     private double lastError = 0;
-    double distanceInches = 12;
+    double distanceInches = PIDConstantsDrive.distanceInches;
     double countsPerInch = 384.5 / (4 * Math.PI);
     double referenceDistance = distanceInches * countsPerInch;
     public void runOpMode() throws InterruptedException {
+        robot.init(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         waitForStart();

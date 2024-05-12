@@ -24,6 +24,7 @@ public class PIDHeading extends LinearOpMode {
     private double lastError = 0;
     double referenceAngle = Math.toRadians(PIDConstantsHeading.referenceAngle);
     public void runOpMode() throws InterruptedException {
+        robot.init(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         waitForStart();
