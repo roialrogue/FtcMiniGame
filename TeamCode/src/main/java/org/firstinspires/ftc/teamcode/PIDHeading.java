@@ -23,7 +23,6 @@ public class PIDHeading extends LinearOpMode {
     double Ki = PIDConstantsHeading.Ki;
     double Kd = PIDConstantsHeading.Kd;
     private double lastError = 0;
-    double referenceAngle = Math.toRadians(PIDConstantsHeading.referenceAngle);
     public void runOpMode() throws InterruptedException {
         robot.init(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -32,6 +31,7 @@ public class PIDHeading extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            double referenceAngle = Math.toRadians(PIDConstantsHeading.referenceAngle);
             double power = PIDControl(referenceAngle, robot.imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle);
             power(power);
         }
