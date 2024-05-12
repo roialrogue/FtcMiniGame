@@ -69,8 +69,10 @@ public class Hardware {
     public void openRight() {RightInTake.setPosition(.18);}
     public void openLeft() {LeftInTake.setPosition(.95);}
 
+
+
 //    public  void slidesTo(int slidePos, double power){
-//        BeltMotor.setTargetPosition(slidePos);
+//        BeltMotor.setTargetPosition(slidePos);A
 //        BeltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //        BeltMotor.setPower(power);
 //    }
