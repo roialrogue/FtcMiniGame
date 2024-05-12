@@ -5,12 +5,11 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.acmerobotics.dashboard.config.Config;
 
-import org.checkerframework.checker.units.qual.A;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 
 @Autonomous(name ="PID Heading")
 public class PIDHeading extends LinearOpMode {
@@ -23,7 +22,7 @@ public class PIDHeading extends LinearOpMode {
     double Ki = PIDConstantsHeading.Ki;
     double Kd = PIDConstantsHeading.Kd;
     private double lastError = 0;
-    double referenceAngle = Math.toRadians(90);
+    double referenceAngle = Math.toRadians(PIDConstantsHeading.referenceAngle);
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
