@@ -147,24 +147,24 @@ public class Auto extends LinearOpMode {
         }
     }
 
-    public void turnDegree(double speed, double degrees, double tolerance, double timeout)
-    {
-        double targetHeading = robot.imu.getHeading() + degrees;
-
-        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        runtime.reset();
-        while (opModeIsActive() && runtime.seconds() < timeout &&
-                Math.abs(targetHeading - imu.getHeading()) > tolerance)
-        {
-            double power = pidController.calculate(targetHeading, imu.getHeading());
-            power = clip(power, -speed, speed);
-            robot.leftRearWheel.setPower(power);
-            robot.rightRearWheel.setPower(-power);
-        }
-        robot.leftRearWheel.setPower(0);
-        robot.rightRearWheel.setPower(0);
-    }
+//    public void turnDegree(double speed, double degrees, double tolerance, double timeout)
+//    {
+//        double targetHeading = robot.imu.getHeading() + degrees;
+//
+//        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        runtime.reset();
+//        while (opModeIsActive() && runtime.seconds() < timeout &&
+//                Math.abs(targetHeading - imu.getHeading()) > tolerance)
+//        {
+//            double power = pidController.calculate(targetHeading, imu.getHeading());
+//            power = clip(power, -speed, speed);
+//            robot.leftRearWheel.setPower(power);
+//            robot.rightRearWheel.setPower(-power);
+//        }
+//        robot.leftRearWheel.setPower(0);
+//        robot.rightRearWheel.setPower(0);
+//    }
     double countsPerInch = 384.5 / (4 * Math.PI);
     public void driveInches(double speed, double distance, double timeoutS) {
 
