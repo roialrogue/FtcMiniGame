@@ -39,33 +39,30 @@ public class TeleOp extends LinearOpMode {
             robot.leftRearWheel.setPower(leftPower);
             robot.rightRearWheel.setPower(rightPower);
 
-            if(gamepad2.right_bumper) {
+            if(gamepad1.right_bumper) {
                 robot.openRight();
             } else {
                 robot.closeRight();
             }
 
-            if(gamepad2.left_bumper) {
+            if(gamepad1.left_bumper) {
                 robot.openLeft();
             } else {
                 robot.closeLeft();
             }
 
-            if(gamepad2.x) {
+            if(gamepad1.x) {
                 robot.openLeft();
                 robot.openRight();
-            } else  {
-                robot.closeLeft();
-                robot.closeRight();
             }
 
             if(gamepad2.right_stick_y > .1) {
-                robot.ArmMotor.setPower(1);
+                robot.ArmMotor.setPower(.7);
             } else if(gamepad2.right_stick_y < -.1) {
-                robot.ArmMotor.setPower(-1);
+                robot.ArmMotor.setPower(-.7);
+            } else {
+                robot.ArmMotor.setPower(0);
             }
-
-            //a run to position code for arm
         }
     }
 }
