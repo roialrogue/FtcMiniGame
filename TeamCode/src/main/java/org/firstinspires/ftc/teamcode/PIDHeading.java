@@ -34,6 +34,8 @@ public class PIDHeading extends LinearOpMode {
         while (opModeIsActive()) {
             double power = PIDControl(referenceAngle, robot.imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle);
             power(power);
+            telemetry.addData("Power",power);
+            telemetry.update();
         }
 
     }
