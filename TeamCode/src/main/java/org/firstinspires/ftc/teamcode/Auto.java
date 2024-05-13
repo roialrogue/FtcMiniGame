@@ -1,8 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.hardware.bosch.BHI260IMU;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -17,8 +22,16 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous(name = "Auto")
 public class Auto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
-    Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
+    public DcMotor ArmMotor;
+
+    public Servo LeftInTake;
+
+    public Servo RightInTake;
+
+    public BHI260IMU imu;
+
+    public OpenCvCamera camera;
     private DriveBase turnDriveBase;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     private CameraPiplineBoard detector1;
@@ -28,8 +41,43 @@ public class Auto extends LinearOpMode {
 
     enum EditingMode {None, position1}
 
+    public Auto(HardwareMap hwMap)
+    {
+        ArmMotor = hwMap.get(DcMotor.class, "CM2");
+        ArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ArmMotor.setDirection(DcMotor.Direction.REVERSE);
+        ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor.setPower(0);
+
+        LeftInTake = hwMap.get(Servo.class, "CS0");
+
+        RightInTake = hwMap.get(Servo.class, "CS1");
+
+        int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
+        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
+        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
+
+        imu = hwMap.get(BHI260IMU.class,"imu");
+        IMU.Parameters parameters = new BHI260IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
+        imu.initialize(parameters);
+        imu.resetYaw();
+    }
+    public void closeRight() {
+        RightInTake.setPosition(.52);
+    }
+    public void closeLeft() {
+        LeftInTake.setPosition(.65);
+    }
+    public void openRight() {
+        RightInTake.setPosition(.30);
+    }
+    public void openLeft() {
+        LeftInTake.setPosition(.86);
+    }
+
     public void runOpMode() {
-        robot.init(hardwareMap);
         myGamePad myGamepad = new myGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
@@ -115,29 +163,5 @@ public class Auto extends LinearOpMode {
 
         //add park
 
-    }
-
-    double countsPerInch = 384.5 / (4 * Math.PI);
-    public void driveInches(double speed, double distance, double timeoutS) {
-
-        if(opModeIsActive()) {
-            int newTarget;
-
-            newTarget = robot.leftRearWheel.getCurrentPosition() + (int) (distance * countsPerInch);
-            robot.leftRearWheel.setTargetPosition(newTarget);
-            robot.rightRearWheel.setTargetPosition(newTarget);
-
-            robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            runtime.reset();
-            robot.leftRearWheel.setPower(Math.abs(speed));
-            robot.rightRearWheel.setPower(Math.abs(speed));
-
-            while (opModeIsActive() && runtime.seconds() < timeoutS && robot.leftRearWheel.isBusy() || robot.rightRearWheel.isBusy()) { }
-
-            robot.leftRearWheel.setPower(0);
-            robot.rightRearWheel.setPower(0);
-        }
     }
 }
