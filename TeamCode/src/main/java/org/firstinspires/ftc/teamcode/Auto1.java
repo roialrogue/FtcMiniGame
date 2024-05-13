@@ -22,8 +22,8 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvWebcam;
 
 
-@Autonomous(name = "Auto")
-public class Auto extends LinearOpMode {
+@Autonomous(name = "Auto1")
+public class Auto1 extends LinearOpMode {
     Hardware robot;
 
     OpenCvCamera webCam;
@@ -33,18 +33,9 @@ public class Auto extends LinearOpMode {
     private CameraPiplineCone detector2;
     boolean editingConfig = true;
     boolean position1 = true;
-
     enum EditingMode {None, position1}
 
     private DriveBase turnDriveBase;
-
-    private enum State {
-        Drive_To_Basket,
-        TURN_At_Basket,
-        Square_To_Cone,
-        Move_Cone_To_Mark,
-        Done
-    }
 
     public void runOpMode() throws InterruptedException {
         robot = new Hardware(hardwareMap);
@@ -97,43 +88,44 @@ public class Auto extends LinearOpMode {
         waitForStart();
         webCam.stopStreaming();
 
-        State state = State.Drive_To_Basket;
-        while (opModeIsActive() & !isStopRequested()) {
-            switch (state) {
-                case Drive_To_Basket:
-                    if (CameraPiplineBoard.red) {
-                        turnDriveBase.drive(.2, 50, 5);
-                    } else if (CameraPiplineBoard.blue) {
-                        turnDriveBase.drive(.2, 65, 7);
-                    }
-                    robot.ArmMotor.setTargetPosition(1000);
-                    robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.ArmMotor.setPower(.7);
-                    state = State.TURN_At_Basket;
-                    break;
-                case TURN_At_Basket:
-                    if (turnDriveBase.driveOnTarget()) {
-                        turnDriveBase.turn(Math.toRadians(90));
-                    }
-                    state = State.Square_To_Cone;
-                    break;
-                case Square_To_Cone:
-                    if (turnDriveBase.turnOnTarget(Math.toRadians(2.0))) {
+        turnDriveBase.drive(.2,50,5);
+        robot.ArmMotor.setTargetPosition(1000);
+        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.ArmMotor.setPower(.7);
 
-                    }
-                    state = State.Move_Cone_To_Mark;
-                    break;
+//        if (position1) {
+//            //left position april 1-3
+//            if(CameraPiplineBoard.blue) {
+//                //Board is blue
+//
+//            } else {
+//                //Board is red
+//
+//            }
+//        } else {
+//            //right position april 3-6
+//            if(CameraPiplineBoard.blue) {
+//                //Board is blue
+//
+//            } else {
+//                //Board is red
+//
+//            }
+//        }
+//
+//        webCam.setPipeline(detector2);
+//        FtcDashboard.getInstance().startCameraStream(webCam, 0);
+//        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+//
+//        if(CameraPiplineCone.blue){
+//            //cone is blue
+//
+//        } else {
+//            //cone is red
+//
+//        }
+//
+//        //add park
 
-                case Move_Cone_To_Mark:
-
-                    state = State.Done;
-                    break;
-                case Done:
-                default:
-                    break;
-            }
-            turnDriveBase.turnTask();
-            turnDriveBase.driveTask();
-        }
     }
 }

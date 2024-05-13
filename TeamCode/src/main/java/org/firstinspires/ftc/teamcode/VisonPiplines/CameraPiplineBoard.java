@@ -30,8 +30,8 @@ public class CameraPiplineBoard extends OpenCvPipeline {
         Imgproc.cvtColor(input, workingMatrix, Imgproc.COLOR_RGB2HSV);
 
         Scalar lowVal, highVal;
-        lowVal = new Scalar(110, 150, 0);
-        highVal = new Scalar(130, 255, 255);
+        lowVal = new Scalar(80, 150, 0);
+        highVal = new Scalar(140, 255, 255);
         Core.inRange(workingMatrix, lowVal, highVal, workingMatrix);
 
 
