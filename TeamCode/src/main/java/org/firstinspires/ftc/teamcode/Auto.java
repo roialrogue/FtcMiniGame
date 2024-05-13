@@ -17,11 +17,14 @@ import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineCone;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous(name = "Auto")
 public class Auto extends LinearOpMode {
     Hardware robot;
+
+    OpenCvCamera webCam;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     ElapsedTime runtime = new ElapsedTime();
     private CameraPiplineBoard detector1;

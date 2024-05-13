@@ -27,6 +27,8 @@ public class Hardware {
 
     public Servo RightInTake;
 
+    public Vision vision;
+
     public OpenCvCamera camera;
 
     public Hardware(HardwareMap hwMap) {
@@ -42,10 +44,10 @@ public class Hardware {
 
         RightInTake = hwMap.get(Servo.class, "CS1");
 
+//        vision = new Vision(hwMap);
         int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
         WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
         camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
-
     }
 
     public void closeRight() {

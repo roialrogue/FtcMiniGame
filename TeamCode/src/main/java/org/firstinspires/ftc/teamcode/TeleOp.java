@@ -36,8 +36,7 @@ public class TeleOp extends LinearOpMode {
             leftPower    = Range.clip(drive + turn, -.6, .6) ;
             rightPower   = Range.clip(drive - turn, -.6, .6) ;
 
-            robot.leftRearWheel.setPower(leftPower);
-            robot.rightRearWheel.setPower(rightPower);
+            robot.drivebase.setDrivePower(leftPower,rightPower);
 
             if(gamepad1.right_bumper) {
                 robot.openRight();

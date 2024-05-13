@@ -14,13 +14,13 @@ import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 
 @Autonomous(name ="PID Heading")
 public class PIDHeading extends LinearOpMode {
+    Hardware robot;
     ElapsedTime runtime = new ElapsedTime();
-    Hardware robot = Hardware.getInstance();
     FtcDashboard dashboard = FtcDashboard.getInstance();
     PIDControlAngleWrap turnPidController;
 
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
+        robot = new Hardware(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         turnPidController = new PIDControlAngleWrap();
         turnPidController.setOutputLimit(.5);

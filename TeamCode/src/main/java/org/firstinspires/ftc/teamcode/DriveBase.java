@@ -55,6 +55,16 @@ public class DriveBase
     // Drive task.
     //
 
+    public void setDrivePower(double leftPower, double rightPower)
+    {
+        // Stop PID control if any.
+        if (driveTarget != null) stopDrive();
+        if (turnTarget != null) stopTurn();
+
+        leftRearWheel.setPower(leftPower);
+        rightRearWheel.setPower(rightPower);
+    }
+
     public void drive(double speed, double distance, double timeout)
     {
         // Stop turn if any.
