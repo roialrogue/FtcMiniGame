@@ -23,6 +23,7 @@ public class PIDHeading extends LinearOpMode {
         robot.init(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         turnPidController = new PIDControlAngleWrap();
+        turnPidController.setOutputLimit(.5);
         robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
@@ -30,7 +31,6 @@ public class PIDHeading extends LinearOpMode {
         while (opModeIsActive()) {
             double referenceAngle = Math.toRadians(PIDConstantsHeading.referenceAngle);
             double power = turnPidController.PIDControl(referenceAngle, robot.imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle);
-            turnPidController.setOutputLimit(.5);
             power(power);
         }
 

@@ -172,7 +172,7 @@ public class Auto extends LinearOpMode {
         if(opModeIsActive()) {
             int newTarget;
 
-            newTarget = robot.leftRearWheel.getCurrentPosition() + (int) (distance + countsPerInch);
+            newTarget = robot.leftRearWheel.getCurrentPosition() + (int) (distance * countsPerInch);
             robot.leftRearWheel.setTargetPosition(newTarget);
             robot.rightRearWheel.setTargetPosition(newTarget);
 
