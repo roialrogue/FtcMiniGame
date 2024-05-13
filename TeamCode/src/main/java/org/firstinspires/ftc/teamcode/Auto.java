@@ -29,8 +29,6 @@ public class Auto extends LinearOpMode {
 
     enum EditingMode {None, position1}
 
-    private DriveBase DriveBase;
-
     private enum State {
         Drive_To_Basket,
         TURN_At_Basket,
@@ -95,9 +93,9 @@ public class Auto extends LinearOpMode {
             switch (state) {
                 case Drive_To_Basket:
                     if (CameraPiplineBoard.red) {
-                        DriveBase.drive(.2, 50, 5);
+                        robot.drivebase.drive(.2, 50, 5);
                     } else if (CameraPiplineBoard.blue) {
-                        DriveBase.drive(.2, 65, 7);
+                        robot.drivebase.drive(.2, 65, 7);
                     }
                     robot.ArmMotor.setTargetPosition(1000);
                     robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -105,14 +103,14 @@ public class Auto extends LinearOpMode {
                     state = State.TURN_At_Basket;
                     break;
                 case TURN_At_Basket:
-                    if (DriveBase.driveOnTarget()) {
-                        DriveBase.turn(Math.toRadians(90));
+                    if (robot.drivebase.driveOnTarget()) {
+                        robot.drivebase.turn(Math.toRadians(90));
                         state = State.Square_To_Cone;
                     }
                     break;
                 case Square_To_Cone:
-                    if (DriveBase.turnOnTarget(Math.toRadians(2.0))) {
-
+                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0))) {
+                        robot.drivebase.turn(-90);
                     }
                     state = State.Move_Cone_To_Mark;
                     break;
@@ -125,8 +123,8 @@ public class Auto extends LinearOpMode {
                 default:
                     break;
             }
-            DriveBase.turnTask();
-            DriveBase.driveTask();
+            robot.drivebase.turnTask();
+            robot.drivebase.driveTask();
         }
     }
 }
