@@ -20,19 +20,20 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 
 public class Hardware {
     public DcMotor rightRearWheel;
-    //CM0
+
     public DcMotor leftRearWheel;
-    //CM3
+
     public DcMotor ArmMotor;
-    //CM2
+
     public Servo LeftInTake;
-    //"CS0"
+
     public Servo RightInTake;
-    //"CS2"
+
     public BHI260IMU imu;
-    public RevColorSensorV3 color;
+
     public OpenCvCamera camera;
     private static Hardware myInstance = null;
+
     public static Hardware getInstance() {
         if (myInstance == null) {
             myInstance = new Hardware();
@@ -53,7 +54,6 @@ public class Hardware {
         rightRearWheel.setDirection(DcMotor.Direction.FORWARD);
         rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearWheel.setPower(0);
-
 
         ArmMotor = hwMap.get(DcMotor.class, "CM2");
         ArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -76,20 +76,19 @@ public class Hardware {
         imu.initialize(parameters);
         imu.resetYaw();
     }
-    public void closeRight() {RightInTake.setPosition(.52);}
-    public void closeLeft() {LeftInTake.setPosition(.65);}
-    public void openRight() {RightInTake.setPosition(.30);}
-    public void openLeft() {LeftInTake.setPosition(.86);}
 
+    public void closeRight() {
+        RightInTake.setPosition(.52);
+    }
 
+    public void closeLeft() {
+        LeftInTake.setPosition(.65);
+    }
 
-
-//    public  void slidesTo(int slidePos, double power){
-//        BeltMotor.setTargetPosition(slidePos);A
-//        BeltMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        BeltMotor.setPower(power);
-//    }
-//    public void slidesTo(int slidePos) {
-//        slidesTo(slidePos,1.0);
-//    }
+    public void openRight() {
+        RightInTake.setPosition(.30);
+    }
+    public void openLeft() {
+        LeftInTake.setPosition(.86);
+    }
 }

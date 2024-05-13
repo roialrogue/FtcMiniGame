@@ -21,7 +21,6 @@ public class Auto extends LinearOpMode {
     OpenCvCamera webCam;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     private CameraPiplineBoard detector1;
-
     private CameraPiplineCone detector2;
     boolean editingConfig = true;
     boolean position1 = true;
@@ -115,37 +114,6 @@ public class Auto extends LinearOpMode {
 
         //add park
 
-    }
-
-    public  void turnDegrees(double speed, double degrees, double timeoutS, int turnDirection) {
-
-        double inchesToTurn = (Math.PI * 14.75 * degrees)/360.0;
-
-        if(opModeIsActive()) {
-            int newTarget;
-
-            newTarget = robot.leftRearWheel.getCurrentPosition() + (int)(inchesToTurn);
-
-            if(turnDirection == 1) {
-                robot.leftRearWheel.setTargetPosition(-newTarget);
-                robot.rightRearWheel.setTargetPosition(newTarget);
-            } else {
-                robot.leftRearWheel.setTargetPosition(newTarget);
-                robot.rightRearWheel.setTargetPosition(-newTarget);
-            }
-
-            robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            runtime.reset();
-            robot.leftRearWheel.setPower(Math.abs(speed));
-            robot.rightRearWheel.setPower(Math.abs(speed));
-
-            while (opModeIsActive() && runtime.seconds() < timeoutS && robot.leftRearWheel.isBusy() || robot.rightRearWheel.isBusy()) { }
-
-            robot.leftRearWheel.setPower(0);
-            robot.rightRearWheel.setPower(0);
-        }
     }
 
     double countsPerInch = 384.5 / (4 * Math.PI);
