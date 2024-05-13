@@ -17,12 +17,10 @@ public class TestHeading extends LinearOpMode {
         DONE_WITH_TURN,
         DONE
     };
-    Hardware robot = Hardware.getInstance();
     private DriveBase turnDriveBase;
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     public void runOpMode() throws InterruptedException {
-        robot.init(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         waitForStart();

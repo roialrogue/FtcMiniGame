@@ -10,13 +10,13 @@ import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="TeleOp")
 public class TeleOp extends LinearOpMode {
+    Hardware robot;
     private ElapsedTime runtime = new ElapsedTime();
 
-    Hardware robot = Hardware.getInstance();
 
     @Override
     public void runOpMode() {
-        robot.init(hardwareMap);
+        robot = new Hardware(hardwareMap);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 

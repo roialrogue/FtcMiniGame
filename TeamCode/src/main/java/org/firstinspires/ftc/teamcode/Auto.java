@@ -21,70 +21,23 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Autonomous(name = "Auto")
 public class Auto extends LinearOpMode {
-    ElapsedTime runtime = new ElapsedTime();
-    OpenCvCamera webCam;
-    public DcMotor ArmMotor;
-
-    public Servo LeftInTake;
-
-    public Servo RightInTake;
-
-    public BHI260IMU imu;
-
-    public OpenCvCamera camera;
-    private DriveBase turnDriveBase;
+    Hardware robot;
     FtcDashboard dashboard = FtcDashboard.getInstance();
+    ElapsedTime runtime = new ElapsedTime();
     private CameraPiplineBoard detector1;
     private CameraPiplineCone detector2;
     boolean editingConfig = true;
     boolean position1 = true;
-
     enum EditingMode {None, position1}
-
-    public Auto(HardwareMap hwMap)
-    {
-        ArmMotor = hwMap.get(DcMotor.class, "CM2");
-        ArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        ArmMotor.setDirection(DcMotor.Direction.REVERSE);
-        ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ArmMotor.setPower(0);
-
-        LeftInTake = hwMap.get(Servo.class, "CS0");
-
-        RightInTake = hwMap.get(Servo.class, "CS1");
-
-        int cameraMonitorViewId = hwMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hwMap.appContext.getPackageName());
-        WebcamName webcamName = hwMap.get(WebcamName.class, "Webcam 1");
-        camera = OpenCvCameraFactory.getInstance().createWebcam(webcamName, cameraMonitorViewId);
-
-        imu = hwMap.get(BHI260IMU.class,"imu");
-        IMU.Parameters parameters = new BHI260IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
-                RevHubOrientationOnRobot.UsbFacingDirection.UP));
-        imu.initialize(parameters);
-        imu.resetYaw();
-    }
-    public void closeRight() {
-        RightInTake.setPosition(.52);
-    }
-    public void closeLeft() {
-        LeftInTake.setPosition(.65);
-    }
-    public void openRight() {
-        RightInTake.setPosition(.30);
-    }
-    public void openLeft() {
-        LeftInTake.setPosition(.86);
-    }
-
     public void runOpMode() {
+        FtcDashboard.getInstance().startCameraStream(webCam, 0);
+        robot = new Hardware(hardwareMap);
         myGamePad myGamepad = new myGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
         CameraPiplineCone detector2 = new CameraPiplineCone(telemetry);
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webCam.openCameraDevice();
-        FtcDashboard.getInstance().startCameraStream(webCam, 0);
         webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
 
         webCam.setPipeline(detector1);
