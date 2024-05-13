@@ -34,7 +34,6 @@ public class PIDHeading extends LinearOpMode {
             telemetry.addData("Power",power);
             telemetry.update();
         }
-
     }
     public void power(double output){
         robot.leftRearWheel.setPower(-output);
