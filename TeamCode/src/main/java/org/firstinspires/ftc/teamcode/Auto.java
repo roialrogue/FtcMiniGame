@@ -19,6 +19,7 @@ public class Auto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     Hardware robot = Hardware.getInstance();
     OpenCvCamera webCam;
+    private DriveBase turnDriveBase;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     private CameraPiplineBoard detector1;
     private CameraPiplineCone detector2;

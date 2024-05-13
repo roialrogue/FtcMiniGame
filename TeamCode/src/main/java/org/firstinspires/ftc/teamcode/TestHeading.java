@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.TestHeading.State.START_TURN;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -9,7 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 
-@Autonomous(name ="PID Heading")
+
+@Autonomous(name ="PID Heading SM")
 public class TestHeading extends LinearOpMode {
     private enum State
     {
@@ -19,6 +18,7 @@ public class TestHeading extends LinearOpMode {
         DONE
     };
     Hardware robot = Hardware.getInstance();
+    private DriveBase turnDriveBase;
     FtcDashboard dashboard = FtcDashboard.getInstance();
 
     public void runOpMode() throws InterruptedException {
@@ -27,18 +27,18 @@ public class TestHeading extends LinearOpMode {
 
         waitForStart();
 
-        State state = START_TURN;
+        State state = State.START_TURN;
         while (opModeIsActive()) {
             switch (state)
             {
                 case START_TURN:
                     // Start the turn.
-                    robot.drivebase.turn(Math.toRadians(PIDConstantsHeading.referenceAngle));
+                    turnDriveBase.turn(Math.toRadians(PIDConstantsHeading.referenceAngle));
                     state = State.WAIT_FOR_TURN;
                     break;
                 case WAIT_FOR_TURN:
                     // Wait for the turn to finish.
-                    if (robot.driveBase.turnOnTarget(Math.toRadians(2.0)))
+                    if (turnDriveBase.turnOnTarget(Math.toRadians(2.0)))
                     {
                         state = State.DONE_WITH_TURN;
                     }
@@ -51,7 +51,7 @@ public class TestHeading extends LinearOpMode {
                 default:
                     break;
             }
-            robot.driveBase.turnTask();
+            turnDriveBase.turnTask();
             telemetry.addData("State", state);
             telemetry.update();
         }
