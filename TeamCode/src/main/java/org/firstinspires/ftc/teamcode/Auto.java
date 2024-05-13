@@ -1,15 +1,9 @@
 package org.firstinspires.ftc.teamcode;
-import android.app.DownloadManager;
 
 import com.acmerobotics.dashboard.FtcDashboard;
-import com.qualcomm.hardware.bosch.BHI260IMU;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -19,7 +13,6 @@ import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineCone;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvWebcam;
 
 
 @Autonomous(name = "Auto")
@@ -36,7 +29,7 @@ public class Auto extends LinearOpMode {
 
     enum EditingMode {None, position1}
 
-    private DriveBase turnDriveBase;
+    private DriveBase DriveBase;
 
     private enum State {
         Drive_To_Basket,
@@ -102,9 +95,9 @@ public class Auto extends LinearOpMode {
             switch (state) {
                 case Drive_To_Basket:
                     if (CameraPiplineBoard.red) {
-                        turnDriveBase.drive(.2, 50, 5);
+                        DriveBase.drive(.2, 50, 5);
                     } else if (CameraPiplineBoard.blue) {
-                        turnDriveBase.drive(.2, 65, 7);
+                        DriveBase.drive(.2, 65, 7);
                     }
                     robot.ArmMotor.setTargetPosition(1000);
                     robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -112,13 +105,13 @@ public class Auto extends LinearOpMode {
                     state = State.TURN_At_Basket;
                     break;
                 case TURN_At_Basket:
-                    if (turnDriveBase.driveOnTarget()) {
-                        turnDriveBase.turn(Math.toRadians(90));
+                    if (DriveBase.driveOnTarget()) {
+                        DriveBase.turn(Math.toRadians(90));
+                        state = State.Square_To_Cone;
                     }
-                    state = State.Square_To_Cone;
                     break;
                 case Square_To_Cone:
-                    if (turnDriveBase.turnOnTarget(Math.toRadians(2.0))) {
+                    if (DriveBase.turnOnTarget(Math.toRadians(2.0))) {
 
                     }
                     state = State.Move_Cone_To_Mark;
@@ -132,8 +125,8 @@ public class Auto extends LinearOpMode {
                 default:
                     break;
             }
-            turnDriveBase.turnTask();
-            turnDriveBase.driveTask();
+            DriveBase.turnTask();
+            DriveBase.driveTask();
         }
     }
 }
