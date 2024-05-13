@@ -32,8 +32,13 @@ public class Auto extends LinearOpMode {
     private enum State {
         Drive_To_Basket,
         TURN_At_Basket,
+        Drop_Pixel,
         Square_To_Cone,
+        Arm_Down,
+        Grab_Cone,
+        Grab_cone_claw,
         Move_Cone_To_Mark,
+        Move_Cone_On_Mark,
         Done
     }
 
@@ -94,7 +99,8 @@ public class Auto extends LinearOpMode {
                 case Drive_To_Basket:
                     if (CameraPiplineBoard.red) {
                         robot.drivebase.drive(.2, 50, 5);
-                    } else if (CameraPiplineBoard.blue) {
+                    } else {
+                        //Blue
                         robot.drivebase.drive(.2, 65, 7);
                     }
                     robot.ArmMotor.setTargetPosition(1000);
@@ -105,19 +111,65 @@ public class Auto extends LinearOpMode {
                 case TURN_At_Basket:
                     if (robot.drivebase.driveOnTarget()) {
                         robot.drivebase.turn(Math.toRadians(90));
+                        state = State.Drop_Pixel;
+                    }
+                    break;
+
+                case Drop_Pixel:
+                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0))) {
+                        robot.openLeft();
+                        robot.openRight();
                         state = State.Square_To_Cone;
+                        runtime.reset();
                     }
                     break;
                 case Square_To_Cone:
-                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0))) {
+                    if (runtime.seconds() > 0.5) {
                         robot.drivebase.turn(-90);
+                        state = State.Arm_Down;
                     }
-                    state = State.Move_Cone_To_Mark;
                     break;
-
+                case Arm_Down:
+                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0))) {
+                        robot.ArmMotor.setTargetPosition(200);
+                        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        robot.ArmMotor.setPower(.7);
+                        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+                        webCam.setPipeline(detector2);
+                        state = State.Grab_Cone;
+                    }
+                    break;
+                case Grab_Cone:
+                    if(!robot.ArmMotor.isBusy()) {
+                        robot.drivebase.drive(.2,12,3);
+                        state = State.Grab_cone_claw;
+                    }
+                    break;
+                case Grab_cone_claw:
+                    if(robot.drivebase.driveOnTarget()) {
+                        robot.closeLeft();
+                        robot.closeRight();
+                        state = State.Move_Cone_To_Mark;
+                        runtime.reset();
+                    }
+                    break;
                 case Move_Cone_To_Mark:
-
-                    state = State.Done;
+                    if(runtime.seconds() > 0.5) {
+                        robot.drivebase.drive(.2,54,5);
+                        state = State.Move_Cone_On_Mark;
+                    }
+                    break;
+                case Move_Cone_On_Mark:
+                    if(robot.drivebase.driveOnTarget()) {
+                        if (CameraPiplineCone.red) {
+                            robot.drivebase.turn(-30);
+                            state = State.Done;
+                        } else {
+                            //Blue
+                            robot.drivebase.turn(30);
+                            state = State.Done;
+                        }
+                    }
                     break;
                 case Done:
                 default:

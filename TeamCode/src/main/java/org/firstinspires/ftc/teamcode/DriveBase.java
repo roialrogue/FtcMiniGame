@@ -58,8 +58,8 @@ public class DriveBase
     public void setDrivePower(double leftPower, double rightPower)
     {
         // Stop PID control if any.
-        if (driveTarget != null) stopDrive();
-        if (turnTarget != null) stopTurn();
+        stopDrive();
+        stopTurn();
 
         leftRearWheel.setPower(leftPower);
         rightRearWheel.setPower(rightPower);
@@ -85,11 +85,14 @@ public class DriveBase
 
     public void stopDrive()
     {
-        driveTarget = null;
-        leftRearWheel.setPower(0);
-        rightRearWheel.setPower(0);
-        leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        if (driveTarget != null)
+        {
+            driveTarget = null;
+            leftRearWheel.setPower(0);
+            rightRearWheel.setPower(0);
+            leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
 
     public boolean driveOnTarget()
@@ -124,11 +127,14 @@ public class DriveBase
 
     public void stopTurn()
     {
-        turnTarget = null;
-        leftRearWheel.setPower(0);
-        rightRearWheel.setPower(0);
-        leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        if (turnTarget != null)
+        {
+            turnTarget = null;
+            leftRearWheel.setPower(0);
+            rightRearWheel.setPower(0);
+            leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
 
     public boolean turnOnTarget(double tolerance)
