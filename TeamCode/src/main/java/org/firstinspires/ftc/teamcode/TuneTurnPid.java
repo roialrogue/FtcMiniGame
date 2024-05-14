@@ -26,7 +26,6 @@ public class TuneTurnPid extends LinearOpMode
 
         waitForStart();
 
-
         State state = State.SET_TARGET;
         while (opModeIsActive())
         {
@@ -49,6 +48,7 @@ public class TuneTurnPid extends LinearOpMode
                     break;
             }
             telemetry.addData("TuneTurnPID.state", state);
+            telemetry.addData("TuneTurnPID.currTarget", currTarget);
             telemetry.addData("TuneTurnPID.currHeading", robot.drivebase.getHeading());
             telemetry.update();
         }

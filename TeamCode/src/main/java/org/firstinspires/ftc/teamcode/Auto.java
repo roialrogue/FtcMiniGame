@@ -38,6 +38,8 @@ public class Auto extends LinearOpMode {
         Grab_cone_claw,
         Move_Cone_To_Mark,
         Move_Cone_On_Mark,
+        OPEN_CLAW,
+        BACK_UP,
         Done
     }
 
