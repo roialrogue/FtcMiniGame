@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.VisonPiplines;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-public class myGamePad {
+public class MyGamePad {
     Gamepad gamepad;
     boolean xButtonPressed = false;
     boolean yButtonPressed = false;
@@ -18,7 +18,7 @@ public class myGamePad {
 
 
     /* Constructor */
-    public myGamePad(Gamepad gamepad ) {
+    public MyGamePad(Gamepad gamepad ) {
 
 
         this.gamepad = gamepad;

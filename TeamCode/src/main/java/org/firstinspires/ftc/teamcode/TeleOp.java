@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -11,8 +8,6 @@ import com.qualcomm.robotcore.util.Range;
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="TeleOp")
 public class TeleOp extends LinearOpMode {
     Hardware robot;
-    private ElapsedTime runtime = new ElapsedTime();
-
 
     @Override
     public void runOpMode() {
@@ -22,8 +17,7 @@ public class TeleOp extends LinearOpMode {
 
         robot.closeLeft();
         robot.closeRight();
-        robot.ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        double slowMode = .6;
         waitForStart();
 
         while (opModeIsActive()) {
@@ -33,8 +27,8 @@ public class TeleOp extends LinearOpMode {
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -.6, .6) ;
-            rightPower   = Range.clip(drive - turn, -.6, .6) ;
+            leftPower    = Range.clip(drive + turn, -1*slowMode, 1*slowMode) ;
+            rightPower   = Range.clip(drive - turn, -1*slowMode, 1*slowMode) ;
 
             robot.drivebase.setDrivePower(leftPower,rightPower);
 

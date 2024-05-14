@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineBoard;
 import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineCone;
-import org.firstinspires.ftc.teamcode.VisonPiplines.myGamePad;
+import org.firstinspires.ftc.teamcode.VisonPiplines.MyGamePad;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -23,8 +23,6 @@ public class Auto extends LinearOpMode {
     OpenCvCamera webCam;
     FtcDashboard dashboard = FtcDashboard.getInstance();
     ElapsedTime runtime = new ElapsedTime();
-    private CameraPiplineBoard detector1;
-    private CameraPiplineCone detector2;
     boolean editingConfig = true;
     boolean position1 = true;
 
@@ -45,7 +43,7 @@ public class Auto extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         robot = new Hardware(hardwareMap, telemetry);
-        myGamePad myGamepad = new myGamePad(gamepad1);
+        MyGamePad myGamepad = new MyGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
         CameraPiplineCone detector2 = new CameraPiplineCone(telemetry);
@@ -113,13 +111,13 @@ public class Auto extends LinearOpMode {
                     break;
                 case TURN_At_Basket:
                     if (robot.drivebase.driveOnTarget()) {
-                        robot.drivebase.turn(Math.toRadians(90),3);
+                        robot.drivebase.turn(90,3);
                         state = State.Drop_Pixel;
                     }
                     break;
 
                 case Drop_Pixel:
-                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0))) {
+                    if (robot.drivebase.turnOnTarget(2.0)) {
                         robot.openLeft();
                         robot.openRight();
                         state = State.Square_To_Cone;
@@ -128,12 +126,12 @@ public class Auto extends LinearOpMode {
                     break;
                 case Square_To_Cone:
                     if (runtime.seconds() > 0.5) {
-                        robot.drivebase.turn(Math.toRadians(-90),3);
+                        robot.drivebase.turn(-90,3);
                         state = State.Arm_Down;
                     }
                     break;
                 case Arm_Down:
-                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0))) {
+                    if (robot.drivebase.turnOnTarget(2.0)) {
                         robot.ArmMotor.setTargetPosition(200);
                         robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         robot.ArmMotor.setPower(.7);
@@ -166,12 +164,11 @@ public class Auto extends LinearOpMode {
                     if(robot.drivebase.driveOnTarget()) {
                         if (CameraPiplineCone.red) {
                             robot.drivebase.turn(-30,1);
-                            state = State.Done;
                         } else {
                             //Blue
                             robot.drivebase.turn(30,1);
-                            state = State.Done;
                         }
+                        state = State.Done;
                     }
                     break;
                 case Done:

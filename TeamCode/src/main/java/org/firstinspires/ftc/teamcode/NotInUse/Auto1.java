@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineBoard;
 import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineCone;
-import org.firstinspires.ftc.teamcode.VisonPiplines.myGamePad;
+import org.firstinspires.ftc.teamcode.VisonPiplines.MyGamePad;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -32,7 +32,7 @@ public class Auto1 extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         robot = new Hardware(hardwareMap, telemetry);
-        myGamePad myGamepad = new myGamePad(gamepad1);
+        MyGamePad myGamepad = new MyGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
         CameraPiplineCone detector2 = new CameraPiplineCone(telemetry);
