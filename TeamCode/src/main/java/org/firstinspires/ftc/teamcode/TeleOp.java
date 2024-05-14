@@ -16,7 +16,7 @@ public class TeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        robot = new Hardware(hardwareMap);
+        robot = new Hardware(hardwareMap, telemetry);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
