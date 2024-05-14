@@ -51,7 +51,7 @@ public class TestHeading extends LinearOpMode {
                     state = State.START_DRIVE;
                     break;
                 case START_DRIVE:
-                    robot.drivebase.drive(.2,50,3);
+                    robot.drivebase.drive(.2,24,3);
                     state = State.WAIT_FOR_DRIVE;
                     break;
                 case WAIT_FOR_DRIVE:
