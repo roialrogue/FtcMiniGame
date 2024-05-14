@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
@@ -37,7 +36,7 @@ public class Hardware {
 
     public OpenCvCamera camera;
 
-    public Hardware(HardwareMap hwMap) {
+    public Hardware(HardwareMap hwMap, Telemetry telemetry) {
         drivebase = new DriveBase(hwMap, telemetry);
 
         ArmMotor = hwMap.get(DcMotor.class, "CM2");

@@ -26,7 +26,7 @@ public class TestHeading extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        robot = new Hardware(hardwareMap);
+        robot = new Hardware(hardwareMap, telemetry);
 
         waitForStart();
 
