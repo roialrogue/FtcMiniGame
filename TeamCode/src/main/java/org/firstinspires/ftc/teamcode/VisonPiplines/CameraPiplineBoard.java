@@ -7,6 +7,10 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class CameraPiplineBoard extends OpenCvPipeline {
     private Mat workingMatrix = new Mat();
+
+    private Mat workingMatrix1 = new Mat();
+
+    private Mat workingMatrix2 = new Mat();
     public static boolean red;
     public static boolean blue;
     public static int matArowStart = 0;
@@ -30,10 +34,15 @@ public class CameraPiplineBoard extends OpenCvPipeline {
         Imgproc.cvtColor(input, workingMatrix, Imgproc.COLOR_RGB2HSV);
 
         Scalar lowVal, highVal;
-        lowVal = new Scalar(80, 150, 0);
-        highVal = new Scalar(140, 255, 255);
-        Core.inRange(workingMatrix, lowVal, highVal, workingMatrix);
+        lowVal = new Scalar(170, 50, 50);
+        highVal = new Scalar(179, 255, 255);
+        Core.inRange(workingMatrix, lowVal, highVal, workingMatrix1);
 
+        lowVal = new Scalar(0, 50, 50);
+        highVal = new Scalar(10, 255, 255);
+        Core.inRange(workingMatrix, lowVal, highVal, workingMatrix2);
+
+        Core.add(workingMatrix1, workingMatrix2, workingMatrix);
 
         Mat low = workingMatrix.submat(matArowStart,matArowEnd, matAcolStart, matAcolEnd);
         Mat high = workingMatrix.submat(matBrowStart, matBrowEnd, matBcolStart, matBcolEnd);
@@ -49,10 +58,10 @@ public class CameraPiplineBoard extends OpenCvPipeline {
 
         if (lowValue > highValue) {
             telemetry.addData("Found color","Blue");
-            blue = true;
+            red = true;
         } else {
             telemetry.addData("Found color","Red");
-            red = true;
+            blue = true;
         }
         telemetry.update();
         return workingMatrix;

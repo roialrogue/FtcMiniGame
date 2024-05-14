@@ -8,6 +8,10 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 public class CameraPiplineCone extends OpenCvPipeline {
     private Mat workingMatrix = new Mat();
+
+    private Mat workingMatrix1 = new Mat();
+
+    private Mat workingMatrix2 = new Mat();
     public static boolean red;
     public static boolean blue;
     public static int base;
@@ -28,9 +32,16 @@ public class CameraPiplineCone extends OpenCvPipeline {
         Imgproc.cvtColor(input, workingMatrix, Imgproc.COLOR_RGB2HSV);
 
         Scalar lowVal, highVal;
-        lowVal = new Scalar(110, 150, 0);
-        highVal = new Scalar(130, 255, 255);
-        Core.inRange(workingMatrix, lowVal, highVal, workingMatrix);
+        lowVal = new Scalar(170, 50, 50);
+        highVal = new Scalar(179, 255, 255);
+        Core.inRange(workingMatrix, lowVal, highVal, workingMatrix1);
+
+        lowVal = new Scalar(0, 50, 50);
+        highVal = new Scalar(10, 255, 255);
+        Core.inRange(workingMatrix, lowVal, highVal, workingMatrix2);
+
+        Core.add(workingMatrix1, workingMatrix2, workingMatrix);
+
 
         Mat all = workingMatrix.submat(matArowStart,matArowEnd, matAcolStart, matAcolEnd);
 
@@ -40,14 +51,16 @@ public class CameraPiplineCone extends OpenCvPipeline {
 
         red = false;
         blue = false;
-        base = 5;
+        base = 10;
 
         if (Value > base) {
-            telemetry.addData("Found color","Blue");
-            blue = true;
-        } else {
-            telemetry.addData("Found color", "Red");
+            telemetry.addData("Found color","red");
+            telemetry.update();
             red = true;
+        } else {
+            telemetry.addData("Found color", "blue");
+            telemetry.update();
+            blue = true;
         }
         telemetry.update();
         return workingMatrix;

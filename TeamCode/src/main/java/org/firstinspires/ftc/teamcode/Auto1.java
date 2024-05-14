@@ -35,8 +35,6 @@ public class Auto1 extends LinearOpMode {
     boolean position1 = true;
     enum EditingMode {None, position1}
 
-    private DriveBase turnDriveBase;
-
     public void runOpMode() throws InterruptedException {
         robot = new Hardware(hardwareMap);
         myGamePad myGamepad = new myGamePad(gamepad1);
@@ -84,34 +82,38 @@ public class Auto1 extends LinearOpMode {
 
         telemetry.addData("Ready", "Editing auto is done");
         telemetry.update();
-
+        robot.closeLeft();
+        robot.closeRight();
         waitForStart();
         webCam.stopStreaming();
 
-        turnDriveBase.drive(.2,50,5);
-        robot.ArmMotor.setTargetPosition(1000);
-        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.ArmMotor.setPower(.7);
+        if (position1) {
+            //left position april 1-3
+            if(CameraPiplineBoard.blue) {
+                //Board is blue
+                driveInches(.2,50,5);
 
-//        if (position1) {
-//            //left position april 1-3
-//            if(CameraPiplineBoard.blue) {
-//                //Board is blue
-//
-//            } else {
-//                //Board is red
-//
-//            }
-//        } else {
-//            //right position april 3-6
-//            if(CameraPiplineBoard.blue) {
-//                //Board is blue
-//
-//            } else {
-//                //Board is red
-//
-//            }
-//        }
+            } else {
+                //Board is red
+                driveInches(.2,50,5);
+            }
+            robot.ArmMotor.setTargetPosition(1000);
+            robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.ArmMotor.setPower(.7);
+            robot.drivebase.turn(90);
+            robot.drivebase.turnTask();
+            while(!robot.drivebase.turnOnTarget(2));
+            robot.drivebase.stopTurn();
+        } else {
+            //right position april 3-6
+            if(CameraPiplineBoard.blue) {
+                //Board is blue
+
+            } else {
+                //Board is red
+
+            }
+        }
 //
 //        webCam.setPipeline(detector2);
 //        FtcDashboard.getInstance().startCameraStream(webCam, 0);
@@ -127,5 +129,27 @@ public class Auto1 extends LinearOpMode {
 //
 //        //add park
 
+    }
+
+    private static final double countsPerInch = 384.5 / (4 * Math.PI);
+
+    public void driveInches(double speed, double distance, double timeouts) {
+        int newTarget;
+
+        newTarget = robot.leftRearWheel.getCurrentPosition() + (int) (distance * countsPerInch);
+        robot.leftRearWheel.setTargetPosition(newTarget);
+        robot.rightRearWheel.setTargetPosition(newTarget);
+
+        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        runtime.reset();
+        robot.leftRearWheel.setPower(Math.abs(speed));
+        robot.rightRearWheel.setPower(Math.abs(speed));
+
+        while (opModeIsActive() && runtime.seconds() < timeouts && robot.leftRearWheel.isBusy() || robot.rightRearWheel.isBusy()) { }
+
+        robot.leftRearWheel.setPower(0);
+        robot.rightRearWheel.setPower(0);
     }
 }

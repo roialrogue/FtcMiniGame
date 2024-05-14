@@ -73,10 +73,10 @@ public class DriveBase
         driveTarget = leftRearWheel.getCurrentPosition() + (int) (distance * countsPerInch);
         driveTimeout = timeout;
 
-        leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftRearWheel.setTargetPosition(driveTarget);
         rightRearWheel.setTargetPosition(driveTarget);
+        leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftRearWheel.setPower(Math.abs(speed));
         rightRearWheel.setPower(Math.abs(speed));
 

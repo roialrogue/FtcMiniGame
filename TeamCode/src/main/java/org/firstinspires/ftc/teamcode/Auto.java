@@ -89,6 +89,8 @@ public class Auto extends LinearOpMode {
 
         telemetry.addData("Ready", "Editing auto is done");
         telemetry.update();
+        robot.closeLeft();
+        robot.closeRight();
 
         waitForStart();
         webCam.stopStreaming();
