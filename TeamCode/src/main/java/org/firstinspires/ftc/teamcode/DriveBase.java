@@ -14,7 +14,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.PIDConstants.PIDControlAngleWrap;
 
-public class DriveBase {
+public class DriveBase
+{
     private static final double countsPerInch = 384.5 / (4 * Math.PI);
     private Telemetry telemetry;
     private ElapsedTime runtime;
@@ -27,7 +28,8 @@ public class DriveBase {
     private Integer driveTarget = null;
     private double timeout = 0.0;
 
-    public DriveBase(HardwareMap hwMap, Telemetry telemetry) {
+    public DriveBase(HardwareMap hwMap, Telemetry telemetry)
+    {
         this.telemetry = telemetry;
         runtime = new ElapsedTime();
         leftRearWheel = hwMap.get(DcMotor.class, "CM3");
@@ -42,7 +44,7 @@ public class DriveBase {
         rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearWheel.setPower(0);
 
-        imu = hwMap.get(BHI260IMU.class, "imu");
+        imu = hwMap.get(BHI260IMU.class,"imu");
         IMU.Parameters parameters = new BHI260IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
                 RevHubOrientationOnRobot.UsbFacingDirection.UP));
@@ -57,7 +59,8 @@ public class DriveBase {
     // Drive task.
     //
 
-    public void setDrivePower(double leftPower, double rightPower) {
+    public void setDrivePower(double leftPower, double rightPower)
+    {
         // Stop PID control if any.
         stopDrive();
         stopTurn();
@@ -66,7 +69,8 @@ public class DriveBase {
         rightRearWheel.setPower(rightPower);
     }
 
-    public void drive(double speed, double distance, double timeout) {
+    public void drive(double speed, double distance, double timeout)
+    {
         // Stop turn if any.
         stopTurn();
 
@@ -83,8 +87,10 @@ public class DriveBase {
         runtime.reset();
     }
 
-    public void stopDrive() {
-        if (driveTarget != null) {
+    public void stopDrive()
+    {
+        if (driveTarget != null)
+        {
             driveTarget = null;
             leftRearWheel.setPower(0);
             rightRearWheel.setPower(0);
@@ -93,13 +99,17 @@ public class DriveBase {
         }
     }
 
-    public boolean driveOnTarget() {
+    public boolean driveOnTarget()
+    {
         return !leftRearWheel.isBusy() && !rightRearWheel.isBusy();
     }
 
-    public void driveTask() {
-        if (driveTarget != null) {
-            if (runtime.seconds() >= timeout || driveOnTarget()) {
+    public void driveTask()
+    {
+        if (driveTarget != null)
+        {
+            if (runtime.seconds() >= timeout || driveOnTarget())
+            {
                 stopDrive();
             }
             telemetry.addData("DriveTask: CurrPos", leftRearWheel.getCurrentPosition() + "," + rightRearWheel.getCurrentPosition());
@@ -111,7 +121,8 @@ public class DriveBase {
     // Turn task.
     //
 
-    public void turn(double angle, double timeout) {
+    public void turn(double angle, double timeout)
+    {
         // Stop drive if any.
         stopDrive();
 
@@ -121,8 +132,10 @@ public class DriveBase {
         rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-    public void stopTurn() {
-        if (turnTarget != null) {
+    public void stopTurn()
+    {
+        if (turnTarget != null)
+        {
             turnTarget = null;
             leftRearWheel.setPower(0);
             rightRearWheel.setPower(0);
@@ -131,27 +144,36 @@ public class DriveBase {
         }
     }
 
-    public boolean turnOnTarget(double tolerance) {
+    public boolean turnOnTarget(double tolerance)
+    {
         boolean isOnTarget = false;
 
-        if (turnTarget != null) {
+        if (turnTarget != null)
+        {
             isOnTarget = Math.abs(turnTarget - currHeading) <= tolerance;
-            if (isOnTarget) {
+            if (isOnTarget)
+            {
                 stopTurn();
             }
         }
         return isOnTarget;
     }
 
-    public void turnTask() {
+    public void turnTask()
+    {
         currHeading = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle;
-        if (turnTarget != null) {
-            if (runtime.seconds() >= timeout) {
+        if (turnTarget != null)
+        {
+            if (runtime.seconds() >= timeout)
+            {
                 stopTurn();
             }
-            double output = turnPidController.PIDControl(currHeading + turnTarget, currHeading);
-            leftRearWheel.setPower(-output);
-            rightRearWheel.setPower(output);
+            else
+            {
+                double output = turnPidController.PIDControl(currHeading + turnTarget, currHeading);
+                leftRearWheel.setPower(-output);
+                rightRearWheel.setPower(output);
+            }
             telemetry.addData("TurnTask: CurrHeading", currHeading);
             telemetry.update();
         }
