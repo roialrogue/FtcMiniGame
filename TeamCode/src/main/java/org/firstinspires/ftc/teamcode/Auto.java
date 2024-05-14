@@ -112,7 +112,7 @@ public class Auto extends LinearOpMode {
                     break;
                 case TURN_At_Basket:
                     if (robot.drivebase.driveOnTarget()) {
-                        robot.drivebase.turn(Math.toRadians(90));
+                        robot.drivebase.turn(Math.toRadians(90),3);
                         state = State.Drop_Pixel;
                     }
                     break;
@@ -127,7 +127,7 @@ public class Auto extends LinearOpMode {
                     break;
                 case Square_To_Cone:
                     if (runtime.seconds() > 0.5) {
-                        robot.drivebase.turn(-90);
+                        robot.drivebase.turn(Math.toRadians(-90),3);
                         state = State.Arm_Down;
                     }
                     break;
@@ -164,11 +164,11 @@ public class Auto extends LinearOpMode {
                 case Move_Cone_On_Mark:
                     if(robot.drivebase.driveOnTarget()) {
                         if (CameraPiplineCone.red) {
-                            robot.drivebase.turn(-30);
+                            robot.drivebase.turn(-30,1);
                             state = State.Done;
                         } else {
                             //Blue
-                            robot.drivebase.turn(30);
+                            robot.drivebase.turn(30,1);
                             state = State.Done;
                         }
                     }
