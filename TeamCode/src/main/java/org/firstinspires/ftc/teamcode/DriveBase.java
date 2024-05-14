@@ -150,7 +150,7 @@ public class DriveBase
 
         if (turnTarget != null)
         {
-            isOnTarget = Math.abs(turnTarget - currHeading) <= tolerance;
+            isOnTarget = runtime.seconds() >= timeout || Math.abs(turnTarget - currHeading) <= tolerance;
             if (isOnTarget)
             {
                 stopTurn();
@@ -164,16 +164,9 @@ public class DriveBase
         currHeading = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle;
         if (turnTarget != null)
         {
-            if (runtime.seconds() >= timeout)
-            {
-                stopTurn();
-            }
-            else
-            {
-                double output = turnPidController.PIDControl(currHeading + turnTarget, currHeading);
-                leftRearWheel.setPower(-output);
-                rightRearWheel.setPower(output);
-            }
+            double output = turnPidController.PIDControl(currHeading + turnTarget, currHeading);
+            leftRearWheel.setPower(-output);
+            rightRearWheel.setPower(output);
             telemetry.addData("TurnTask: CurrHeading", currHeading);
             telemetry.update();
         }
