@@ -84,36 +84,44 @@ public class Auto1 extends LinearOpMode {
         telemetry.update();
         robot.closeLeft();
         robot.closeRight();
+        robot.ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
         webCam.stopStreaming();
 
-        if (position1) {
-            //left position april 1-3
-            if(CameraPiplineBoard.blue) {
-                //Board is blue
-                driveInches(.2,50,5);
+        robot.ArmMotor.setTargetPosition(-1000);
+        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.ArmMotor.setPower(.7);
+        while(robot.ArmMotor.isBusy()) {}
 
-            } else {
-                //Board is red
-                driveInches(.2,50,5);
-            }
-            robot.ArmMotor.setTargetPosition(1000);
-            robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.ArmMotor.setPower(.7);
-            robot.drivebase.turn(90,3);
-            robot.drivebase.turnTask();
-            while(!robot.drivebase.turnOnTarget(2));
-            robot.drivebase.stopTurn();
-        } else {
-            //right position april 3-6
-            if(CameraPiplineBoard.blue) {
-                //Board is blue
 
-            } else {
-                //Board is red
-
-            }
-        }
+//        if (position1) {
+//            //left position april 1-3
+//            if(CameraPiplineBoard.blue) {
+//                //Board is blue
+//                driveInches(.2,50,5);
+//
+//            } else {
+//                //Board is red
+//                driveInches(.2,50,5);
+//            }
+//            robot.ArmMotor.setTargetPosition(1000);
+//            robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            robot.ArmMotor.setPower(.7);
+//            robot.drivebase.turn(90,3);
+//            robot.drivebase.turnTask();
+//            while(!robot.drivebase.turnOnTarget(2));
+//            robot.drivebase.stopTurn();
+//        } else {
+//            //right position april 3-6
+//            if(CameraPiplineBoard.blue) {
+//                //Board is blue
+//
+//            } else {
+//                //Board is red
+//
+//            }
+//        }
 //
 //        webCam.setPipeline(detector2);
 //        FtcDashboard.getInstance().startCameraStream(webCam, 0);

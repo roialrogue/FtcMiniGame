@@ -34,7 +34,7 @@ public class TestHeading extends LinearOpMode {
         robot.closeLeft();
         waitForStart();
 
-        State state = State.START_TURN;
+        State state = State.MOVE_ARM;
         while (opModeIsActive()) {
             switch (state)
             {
@@ -48,7 +48,7 @@ public class TestHeading extends LinearOpMode {
                     // Wait for the turn to finish.
                     if (robot.drivebase.turnOnTarget(Math.toRadians(2)))
                     {
-                        state = State.DONE_WITH_TURN;
+                        state = State.DONE;
                     }
                     break;
                 case DONE_WITH_TURN:
@@ -63,10 +63,10 @@ public class TestHeading extends LinearOpMode {
                         state = State.MOVE_ARM;
                     }
                 case MOVE_ARM:
-                    robot.ArmMotor.setTargetPosition(1000);
-                    robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    robot.ArmMotor.setPower(.7);
-                    state = State.WAIT_FOR_ARM;
+                        robot.ArmMotor.setTargetPosition(-1000);
+                        robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        robot.ArmMotor.setPower(.7);
+                        state = State.WAIT_FOR_ARM;
                 case WAIT_FOR_ARM:
                     if(!robot.ArmMotor.isBusy()) {
                         state = State.DONE;

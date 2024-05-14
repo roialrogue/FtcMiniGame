@@ -67,6 +67,8 @@ public class TeleOp extends LinearOpMode {
                 robot.ArmMotor.setTargetPosition(1000);
                 robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.ArmMotor.setPower(.7);
+                telemetry.addData("Hi","");
+                telemetry.update();
             }
         }
     }
