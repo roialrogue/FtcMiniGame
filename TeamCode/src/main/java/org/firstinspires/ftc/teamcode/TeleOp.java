@@ -62,6 +62,12 @@ public class TeleOp extends LinearOpMode {
             } else {
                 robot.ArmMotor.setPower(0);
             }
+
+            if(gamepad2.x) {
+                robot.ArmMotor.setTargetPosition(1000);
+                robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.ArmMotor.setPower(.7);
+            }
         }
     }
 }
