@@ -36,7 +36,7 @@ public class Auto1 extends LinearOpMode {
     enum EditingMode {None, position1}
 
     public void runOpMode() throws InterruptedException {
-        robot = new Hardware(hardwareMap);
+        robot = new Hardware(hardwareMap, telemetry);
         myGamePad myGamepad = new myGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
@@ -100,7 +100,7 @@ public class Auto1 extends LinearOpMode {
             robot.ArmMotor.setTargetPosition(1000);
             robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.ArmMotor.setPower(.7);
-            robot.drivebase.turn(90);
+            robot.drivebase.turn(90,3);
             robot.drivebase.turnTask();
             while(!robot.drivebase.turnOnTarget(2));
             robot.drivebase.stopTurn();

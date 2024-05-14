@@ -22,7 +22,7 @@ public class PIDHeading extends LinearOpMode {
     PIDControlAngleWrap turnPidController;
 
     public void runOpMode() throws InterruptedException {
-        robot = new Hardware(hardwareMap);
+        robot = new Hardware(hardwareMap,telemetry);
         TestDriveBase = new HardwareDriveBase(hardwareMap);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         turnPidController = new PIDControlAngleWrap();
