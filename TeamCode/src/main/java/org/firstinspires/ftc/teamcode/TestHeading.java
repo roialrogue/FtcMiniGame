@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
-
 
 @Autonomous(name ="PID Heading SM")
 public class TestHeading extends LinearOpMode {

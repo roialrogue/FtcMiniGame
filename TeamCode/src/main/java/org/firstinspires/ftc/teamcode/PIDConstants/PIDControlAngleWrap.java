@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode.PIDConstants;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
-
 public class PIDControlAngleWrap {
     private ElapsedTime runtime = new ElapsedTime();
     double integralSum = 0;
