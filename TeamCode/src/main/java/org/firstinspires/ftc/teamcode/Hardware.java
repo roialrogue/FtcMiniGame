@@ -16,9 +16,6 @@ public class Hardware {
 
     public DcMotor ArmMotor;
 
-    public DcMotor leftRearWheel;
-    public DcMotor rightRearWheel;
-
     public Servo LeftInTake;
 
     public Servo RightInTake;

@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -23,10 +22,8 @@ public class TestHeading extends LinearOpMode {
         WAIT_FOR_ARM,
         DONE
     };
-    FtcDashboard dashboard = FtcDashboard.getInstance();
 
     public void runOpMode() throws InterruptedException {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new Hardware(hardwareMap, telemetry);
         robot.closeRight();
         robot.closeLeft();
@@ -60,6 +57,7 @@ public class TestHeading extends LinearOpMode {
                     if(robot.drivebase.driveOnTarget()) {
                         state = State.MOVE_ARM;
                     }
+                    break;
                 case MOVE_ARM:
                         robot.ArmMotor.setTargetPosition(-1000);
                         robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
