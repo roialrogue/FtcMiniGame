@@ -20,9 +20,7 @@ import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 @Autonomous(name ="PID Heading")
 public class PIDHeading extends LinearOpMode {
     Hardware robot;
-
     public DcMotor leftRearWheel;
-
     public DcMotor rightRearWheel;
     ElapsedTime runtime = new ElapsedTime();
     FtcDashboard dashboard = FtcDashboard.getInstance();
