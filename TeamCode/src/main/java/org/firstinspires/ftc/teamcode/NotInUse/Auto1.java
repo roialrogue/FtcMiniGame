@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.NotInUse;
 import android.app.DownloadManager;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -14,8 +14,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Hardware;
 import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineBoard;
 import org.firstinspires.ftc.teamcode.VisonPiplines.CameraPiplineCone;
+import org.firstinspires.ftc.teamcode.myGamePad;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
