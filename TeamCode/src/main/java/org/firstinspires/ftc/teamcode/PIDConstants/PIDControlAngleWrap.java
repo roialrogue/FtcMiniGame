@@ -12,7 +12,7 @@ public class PIDControlAngleWrap {
     double outputLimit = 1;
 
     public double PIDControl(double refrence, double state) {
-        double error = angleWrap(refrence - state);
+        double error = angleWrap(Math.toRadians(refrence - state));
         integralSum += error * runtime.seconds();
         double derivative = (error - lastError) / (runtime.seconds());
         lastError = error;

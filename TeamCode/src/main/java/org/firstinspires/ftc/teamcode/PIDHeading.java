@@ -34,7 +34,7 @@ public class PIDHeading extends LinearOpMode {
 
         while (opModeIsActive()) {
             double referenceAngle = Math.toRadians(PIDConstantsHeading.referenceAngle);
-            double power = turnPidController.PIDControl(referenceAngle, TestDriveBase.imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle);
+            double power = turnPidController.PIDControl(referenceAngle, TestDriveBase.imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle);
             power(power);
 
         }

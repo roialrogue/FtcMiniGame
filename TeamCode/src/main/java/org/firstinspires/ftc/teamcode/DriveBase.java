@@ -161,7 +161,7 @@ public class DriveBase
 
     public void turnTask()
     {
-        currHeading = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS).firstAngle;
+        currHeading = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
         if (turnTarget != null)
         {
             double output = turnPidController.PIDControl(currHeading + turnTarget, currHeading);
