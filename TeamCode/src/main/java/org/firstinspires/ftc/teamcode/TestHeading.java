@@ -23,6 +23,8 @@ public class TestHeading extends LinearOpMode {
         WAIT_FOR_DRIVE,
         MOVE_ARM,
         WAIT_FOR_ARM,
+        MOVE_CLAW,
+        WAIT_FOR_CLAW,
         DONE
     };
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -34,7 +36,7 @@ public class TestHeading extends LinearOpMode {
         robot.closeLeft();
         waitForStart();
 
-        State state = State.MOVE_ARM;
+        State state = State.MOVE_CLAW;
         while (opModeIsActive()) {
             switch (state)
             {
@@ -48,7 +50,7 @@ public class TestHeading extends LinearOpMode {
                     // Wait for the turn to finish.
                     if (robot.drivebase.turnOnTarget(Math.toRadians(2)))
                     {
-                        state = State.DONE;
+                        state = State.DONE_WITH_TURN;
                     }
                     break;
                 case DONE_WITH_TURN:
@@ -62,6 +64,7 @@ public class TestHeading extends LinearOpMode {
                     if(robot.drivebase.driveOnTarget()) {
                         state = State.MOVE_ARM;
                     }
+                    break;
                 case MOVE_ARM:
                         robot.ArmMotor.setTargetPosition(-1000);
                         robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -70,6 +73,16 @@ public class TestHeading extends LinearOpMode {
                         break;
                 case WAIT_FOR_ARM:
                     if(!robot.ArmMotor.isBusy()) {
+                        state = State.MOVE_CLAW;
+                    }
+                    break;
+                case MOVE_CLAW:
+                    robot.openLeft();
+                    robot.openRight();
+                    state = State.WAIT_FOR_CLAW;
+                    break;
+                case WAIT_FOR_CLAW:
+                    if(runtime.seconds() > .5) {
                         state = State.DONE;
                     }
                     break;
