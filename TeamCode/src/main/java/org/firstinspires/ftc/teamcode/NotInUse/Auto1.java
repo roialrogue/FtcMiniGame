@@ -133,26 +133,4 @@ public class Auto1 extends LinearOpMode {
 //        //add park
 
     }
-
-    private static final double countsPerInch = 384.5 / (4 * Math.PI);
-
-    public void driveInches(double speed, double distance, double timeouts) {
-        int newTarget;
-
-        newTarget = robot.leftRearWheel.getCurrentPosition() + (int) (distance * countsPerInch);
-        robot.leftRearWheel.setTargetPosition(newTarget);
-        robot.rightRearWheel.setTargetPosition(newTarget);
-
-        robot.leftRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.rightRearWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        runtime.reset();
-        robot.leftRearWheel.setPower(Math.abs(speed));
-        robot.rightRearWheel.setPower(Math.abs(speed));
-
-        while (opModeIsActive() && runtime.seconds() < timeouts && robot.leftRearWheel.isBusy() || robot.rightRearWheel.isBusy()) { }
-
-        robot.leftRearWheel.setPower(0);
-        robot.rightRearWheel.setPower(0);
-    }
 }
