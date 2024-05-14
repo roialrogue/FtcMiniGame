@@ -1,13 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 
 
 @Autonomous(name ="PID Heading SM")
@@ -27,10 +24,8 @@ public class TestHeading extends LinearOpMode {
         WAIT_FOR_CLAW,
         DONE
     };
-    FtcDashboard dashboard = FtcDashboard.getInstance();
 
     public void runOpMode() throws InterruptedException {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         robot = new Hardware(hardwareMap, telemetry);
         robot.closeRight();
         robot.closeLeft();
