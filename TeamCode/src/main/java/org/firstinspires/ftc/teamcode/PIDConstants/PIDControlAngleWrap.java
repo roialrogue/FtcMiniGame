@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.PIDConstants;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -9,7 +9,6 @@ public class PIDControlAngleWrap {
     private ElapsedTime runtime = new ElapsedTime();
     double integralSum = 0;
     private double lastError = 0;
-
     double outputLimit = 1;
 
     public double PIDControl(double refrence, double state) {
