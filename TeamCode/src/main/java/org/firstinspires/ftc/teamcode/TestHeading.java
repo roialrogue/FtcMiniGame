@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
@@ -20,6 +21,8 @@ public class TestHeading extends LinearOpMode {
         DONE_WITH_TURN,
         START_DRIVE,
         WAIT_FOR_DRIVE,
+        MOVE_ARM,
+        WAIT_FOR_ARM,
         DONE
     };
     FtcDashboard dashboard = FtcDashboard.getInstance();
@@ -42,7 +45,7 @@ public class TestHeading extends LinearOpMode {
                     break;
                 case WAIT_FOR_TURN:
                     // Wait for the turn to finish.
-                    if (robot.drivebase.turnOnTarget(2))
+                    if (robot.drivebase.turnOnTarget(Math.toRadians(2)))
                     {
                         state = State.DONE_WITH_TURN;
                     }
@@ -51,11 +54,20 @@ public class TestHeading extends LinearOpMode {
                     state = State.START_DRIVE;
                     break;
                 case START_DRIVE:
-                    robot.drivebase.drive(.2,50,3);
+                    robot.drivebase.drive(.2,24,3);
                     state = State.WAIT_FOR_DRIVE;
                     break;
                 case WAIT_FOR_DRIVE:
                     if(robot.drivebase.driveOnTarget()) {
+                        state = State.MOVE_ARM;
+                    }
+                case MOVE_ARM:
+                    robot.ArmMotor.setTargetPosition(1000);
+                    robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    robot.ArmMotor.setPower(.7);
+                    state = State.WAIT_FOR_ARM;
+                case WAIT_FOR_ARM:
+                    if(!robot.ArmMotor.isBusy()) {
                         state = State.DONE;
                     }
                 case DONE:
