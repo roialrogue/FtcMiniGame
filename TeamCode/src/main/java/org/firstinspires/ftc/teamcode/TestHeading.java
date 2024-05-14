@@ -39,7 +39,6 @@ public class TestHeading extends LinearOpMode {
                     // Start the turn.
                     robot.drivebase.turn(90,3);
                     state = State.WAIT_FOR_TURN;
-                    runtime.reset();
                     break;
                 case WAIT_FOR_TURN:
                     // Wait for the turn to finish.

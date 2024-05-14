@@ -11,8 +11,7 @@ import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 public class TuneTurnPid extends LinearOpMode
 {
     Hardware robot;
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    double prevTarget;
+    Double prevTarget = null;
 
     private enum State
     {
@@ -24,18 +23,18 @@ public class TuneTurnPid extends LinearOpMode
     {
         robot = new Hardware(hardwareMap,telemetry);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        prevTarget = PIDConstantsHeading.referenceAngle;
 
         waitForStart();
 
-        State state= State.SET_TARGET;
+
+        State state = State.SET_TARGET;
         while (opModeIsActive())
         {
             double currTarget = PIDConstantsHeading.referenceAngle;
             switch (state)
             {
                 case SET_TARGET:
-                    if (currTarget != prevTarget)
+                    if (prevTarget == null || currTarget != prevTarget)
                     {
                         robot.drivebase.turn(currTarget, 3.0);
                         prevTarget = currTarget;
@@ -49,6 +48,9 @@ public class TuneTurnPid extends LinearOpMode
                     }
                     break;
             }
+            telemetry.addData("TuneTurnPID.state", state);
+            telemetry.addData("TuneTurnPID.currHeading", robot.drivebase.getHeading());
+            telemetry.update();
         }
     }
 }
