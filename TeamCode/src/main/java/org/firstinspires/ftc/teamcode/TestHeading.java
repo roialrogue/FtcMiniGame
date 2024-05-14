@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
 @Autonomous(name ="PID Heading SM")
 public class TestHeading extends LinearOpMode {
     Hardware robot;
+    ElapsedTime runtime = new ElapsedTime();
     private enum State
     {
         START_TURN,
@@ -36,26 +38,31 @@ public class TestHeading extends LinearOpMode {
                     // Start the turn.
                     robot.drivebase.turn(Math.toRadians(90));
                     state = State.WAIT_FOR_TURN;
+                    runtime.reset();
+                    sleep(2000);
                     break;
                 case WAIT_FOR_TURN:
                     // Wait for the turn to finish.
-                    if (robot.drivebase.turnOnTarget(Math.toRadians(2.0)))
+                    if (robot.drivebase.turnOnTarget(2))
                     {
                         state = State.DONE_WITH_TURN;
                     }
+                    sleep(2000);
                     break;
                 case DONE_WITH_TURN:
-                    telemetry.addData("PIDHeadingStatus", "Done");
                     state = State.START_DRIVE;
+//                    sleep(2000);
                     break;
                 case START_DRIVE:
-                    robot.drivebase.drive(.2,12,3);
+                    robot.drivebase.drive(.2,50,3);
                     state = State.WAIT_FOR_DRIVE;
+                    sleep(2000);
                     break;
                 case WAIT_FOR_DRIVE:
                     if(robot.drivebase.driveOnTarget()) {
                         state = State.DONE;
                     }
+//                    sleep(2000);
                 case DONE:
                 default:
                     break;
