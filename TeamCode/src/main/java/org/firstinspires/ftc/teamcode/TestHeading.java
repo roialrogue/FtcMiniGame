@@ -67,10 +67,12 @@ public class TestHeading extends LinearOpMode {
                         robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         robot.ArmMotor.setPower(.7);
                         state = State.WAIT_FOR_ARM;
+                        break;
                 case WAIT_FOR_ARM:
                     if(!robot.ArmMotor.isBusy()) {
                         state = State.DONE;
                     }
+                    break;
                 case DONE:
                 default:
                     break;
