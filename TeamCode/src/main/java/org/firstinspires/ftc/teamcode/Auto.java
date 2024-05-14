@@ -43,7 +43,7 @@ public class Auto extends LinearOpMode {
     }
 
     public void runOpMode() throws InterruptedException {
-        robot = new Hardware(hardwareMap);
+        robot = new Hardware(hardwareMap, telemetry);
         myGamePad myGamepad = new myGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
