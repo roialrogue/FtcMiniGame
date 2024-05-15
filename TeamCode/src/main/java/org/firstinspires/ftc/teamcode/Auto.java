@@ -48,6 +48,8 @@ public class Auto extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         robot = new Hardware(hardwareMap, telemetry);
         MyGamePad myGamepad = new MyGamePad(gamepad1);
+        detector1 = new CameraPiplineBoard(telemetry);
+        detector2 = new CameraPiplineCone(telemetry);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webCam.openCameraDevice();
