@@ -24,8 +24,11 @@ public class Auto extends LinearOpMode {
     ElapsedTime runtime = new ElapsedTime();
     boolean editingConfig = true;
     boolean position1 = true;
-
     enum EditingMode {None, position1}
+
+    public CameraPiplineCone detector2;
+    public CameraPiplineBoard detector1;
+
 
     private enum State {
         Drive_To_Basket,
@@ -46,8 +49,6 @@ public class Auto extends LinearOpMode {
         robot = new Hardware(hardwareMap, telemetry);
         MyGamePad myGamepad = new MyGamePad(gamepad1);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        CameraPiplineBoard detector1 = new CameraPiplineBoard(telemetry);
-        CameraPiplineCone detector2 = new CameraPiplineCone(telemetry);
         webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         webCam.openCameraDevice();
         webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
