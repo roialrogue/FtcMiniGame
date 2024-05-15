@@ -23,8 +23,7 @@ public class DriveBase
     private DcMotor leftRearWheel;
     private BHI260IMU imu;
     private PIDControlAngleWrap turnPidController;
-    private Double turnTarget = null;
-    private double currHeading;
+    private Double absolueTurnTarget = null;
     private Integer driveTarget = null;
     private double timeout = 0.0;
 
@@ -123,26 +122,30 @@ public class DriveBase
 
     public double getHeading()
     {
-        currHeading = imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
-        return currHeading;
+        return imu.getRobotOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES).firstAngle;
     }
 
-    public void turn(double angle, double timeout)
+    public void absoluteTurn(double angle, double timeout)
     {
         // Stop drive if any.
         stopDrive();
 
-        turnTarget = angle;
+        absolueTurnTarget = angle;
         this.timeout = timeout;
         leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
+    public void relativeTurn(double angle, double timeout)
+    {
+        absoluteTurn(getHeading() + angle, timeout);
+    }
+
     public void stopTurn()
     {
-        if (turnTarget != null)
+        if (absolueTurnTarget != null)
         {
-            turnTarget = null;
+            absolueTurnTarget = null;
             leftRearWheel.setPower(0);
             rightRearWheel.setPower(0);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -154,9 +157,9 @@ public class DriveBase
     {
         boolean isOnTarget = false;
 
-        if (turnTarget != null)
+        if (absolueTurnTarget != null)
         {
-            isOnTarget = runtime.seconds() >= timeout || Math.abs(turnTarget - currHeading) <= tolerance;
+            isOnTarget = runtime.seconds() >= timeout || Math.abs(absolueTurnTarget - getHeading()) <= tolerance;
             if (isOnTarget)
             {
                 stopTurn();
@@ -167,10 +170,10 @@ public class DriveBase
 
     public void turnTask()
     {
-        getHeading();
-        if (turnTarget != null)
+        if (absolueTurnTarget != null)
         {
-            double output = turnPidController.PIDControl(currHeading + turnTarget, currHeading);
+            double currHeading = getHeading();
+            double output = turnPidController.PIDControl(absolueTurnTarget, currHeading);
             leftRearWheel.setPower(-output);
             rightRearWheel.setPower(output);
             telemetry.addData("TurnTask: CurrHeading", currHeading);
