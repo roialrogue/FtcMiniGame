@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.PIDConstants.PIDConstantsHeading;
+import org.firstinspires.ftc.teamcode.PIDConstants.PIDControlAngleWrap;
 
 @Autonomous(name ="TuneTurnPid")
 public class TuneTurnPid extends LinearOpMode
@@ -35,7 +36,7 @@ public class TuneTurnPid extends LinearOpMode
                 case SET_TARGET:
                     if (prevTarget == null || currTarget != prevTarget)
                     {
-                        robot.drivebase.turn(currTarget, 3.0);
+                        robot.drivebase.absoluteTurn(currTarget, 3.0);
                         telemetry.addData("TuneTurnPID.settingTarget", currTarget);
                         prevTarget = currTarget;
                         state = State.WAIT_FOR_COMPLETION;
@@ -52,6 +53,7 @@ public class TuneTurnPid extends LinearOpMode
             telemetry.addData("TuneTurnPID.state", state);
             telemetry.addData("TuneTurnPID.currTarget", currTarget);
             telemetry.addData("TuneTurnPID.currHeading", robot.drivebase.getHeading());
+            telemetry.addData("Kp",PIDConstantsHeading.Kp);
             telemetry.update();
         }
     }
