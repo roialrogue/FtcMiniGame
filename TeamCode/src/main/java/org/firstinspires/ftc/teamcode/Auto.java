@@ -21,7 +21,6 @@ public class Auto extends LinearOpMode {
     Hardware robot;
 
     OpenCvCamera webCam;
-    FtcDashboard dashboard = FtcDashboard.getInstance();
     ElapsedTime runtime = new ElapsedTime();
     boolean editingConfig = true;
     boolean position1 = true;
