@@ -27,8 +27,8 @@ public class TeleOp extends LinearOpMode {
 
             double drive = -gamepad1.left_stick_y;
             double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1*slowMode, 1*slowMode) ;
-            rightPower   = Range.clip(drive - turn, -1*slowMode, 1*slowMode) ;
+            leftPower  = Range.clip(drive + turn, -1, 1) * slowMode ;
+            rightPower = Range.clip(drive - turn, -1, 1) * slowMode;
 
             robot.drivebase.setDrivePower(leftPower,rightPower);
 
