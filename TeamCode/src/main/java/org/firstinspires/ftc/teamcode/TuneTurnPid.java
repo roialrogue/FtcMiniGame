@@ -36,6 +36,7 @@ public class TuneTurnPid extends LinearOpMode
                     if (prevTarget == null || currTarget != prevTarget)
                     {
                         robot.drivebase.turn(currTarget, 3.0);
+                        telemetry.addData("TuneTurnPID.settingTarget", currTarget);
                         prevTarget = currTarget;
                         state = State.WAIT_FOR_COMPLETION;
                     }
@@ -47,6 +48,7 @@ public class TuneTurnPid extends LinearOpMode
                     }
                     break;
             }
+            robot.drivebase.turnTask();
             telemetry.addData("TuneTurnPID.state", state);
             telemetry.addData("TuneTurnPID.currTarget", currTarget);
             telemetry.addData("TuneTurnPID.currHeading", robot.drivebase.getHeading());
