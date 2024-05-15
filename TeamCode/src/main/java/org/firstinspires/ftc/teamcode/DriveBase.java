@@ -86,6 +86,11 @@ public class DriveBase
         runtime.reset();
     }
 
+    public void drive(double speed, double distance)
+    {
+        drive(speed, distance, 0.0);
+    }
+
     public void stopDrive()
     {
         if (driveTarget != null)
@@ -107,7 +112,7 @@ public class DriveBase
     {
         if (driveTarget != null)
         {
-            if (runtime.seconds() >= timeout || driveOnTarget())
+            if (timeout > 0.0 && runtime.seconds() >= timeout || driveOnTarget())
             {
                 stopDrive();
             }
@@ -137,9 +142,19 @@ public class DriveBase
         runtime.reset();
     }
 
+    public void absoluteTurn(double angle)
+    {
+        absoluteTurn(angle, 0.0);
+    }
+
     public void relativeTurn(double angle, double timeout)
     {
         absoluteTurn(getHeading() + angle, timeout);
+    }
+
+    public void relativeTurn(double angle)
+    {
+        relativeTurn(angle, 0.0);
     }
 
     public void stopTurn()
@@ -160,7 +175,7 @@ public class DriveBase
 
         if (absoluteTurnTarget != null)
         {
-            isOnTarget = runtime.seconds() >= timeout || Math.abs(absoluteTurnTarget - getHeading()) <= tolerance;
+            isOnTarget = timeout > 0.0 && runtime.seconds() >= timeout || Math.abs(absoluteTurnTarget - getHeading()) <= tolerance;
             if (isOnTarget)
             {
                 stopTurn();
