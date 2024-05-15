@@ -23,7 +23,7 @@ public class DriveBase
     private DcMotor leftRearWheel;
     private BHI260IMU imu;
     private PIDControlAngleWrap turnPidController;
-    private Double absolueTurnTarget = null;
+    private Double absoluteTurnTarget = null;
     private Integer driveTarget = null;
     private double timeout = 0.0;
 
@@ -130,7 +130,7 @@ public class DriveBase
         // Stop drive if any.
         stopDrive();
 
-        absolueTurnTarget = angle;
+        absoluteTurnTarget = angle;
         this.timeout = timeout;
         leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -143,9 +143,9 @@ public class DriveBase
 
     public void stopTurn()
     {
-        if (absolueTurnTarget != null)
+        if (absoluteTurnTarget != null)
         {
-            absolueTurnTarget = null;
+            absoluteTurnTarget = null;
             leftRearWheel.setPower(0);
             rightRearWheel.setPower(0);
             leftRearWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -157,9 +157,9 @@ public class DriveBase
     {
         boolean isOnTarget = false;
 
-        if (absolueTurnTarget != null)
+        if (absoluteTurnTarget != null)
         {
-            isOnTarget = runtime.seconds() >= timeout || Math.abs(absolueTurnTarget - getHeading()) <= tolerance;
+            isOnTarget = runtime.seconds() >= timeout || Math.abs(absoluteTurnTarget - getHeading()) <= tolerance;
             if (isOnTarget)
             {
                 stopTurn();
@@ -170,10 +170,10 @@ public class DriveBase
 
     public void turnTask()
     {
-        if (absolueTurnTarget != null)
+        if (absoluteTurnTarget != null)
         {
             double currHeading = getHeading();
-            double output = turnPidController.PIDControl(absolueTurnTarget, currHeading);
+            double output = turnPidController.PIDControl(absoluteTurnTarget, currHeading);
             leftRearWheel.setPower(-output);
             rightRearWheel.setPower(output);
             telemetry.addData("TurnTask: CurrHeading", currHeading);
