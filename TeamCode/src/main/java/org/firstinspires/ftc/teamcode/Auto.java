@@ -19,16 +19,12 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous(name = "Auto")
 public class Auto extends LinearOpMode {
     Hardware robot;
-
-    OpenCvCamera webCam;
     ElapsedTime runtime = new ElapsedTime();
     boolean editingConfig = true;
     boolean position1 = true;
     enum EditingMode {None, position1}
-
     public CameraPiplineCone detector2;
     public CameraPiplineBoard detector1;
-
 
     private enum State {
         Drive_To_Basket,
@@ -51,12 +47,12 @@ public class Auto extends LinearOpMode {
         detector1 = new CameraPiplineBoard(telemetry);
         detector2 = new CameraPiplineCone(telemetry);
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        webCam.openCameraDevice();
-        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-        FtcDashboard.getInstance().startCameraStream(webCam, 0);
-
-        webCam.setPipeline(detector1);
+//        webCam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+//        webCam.openCameraDevice();
+//        robot.vision.cvVision(detector1,720,1080,OpenCvCameraRotation.UPRIGHT);
+//        FtcDashboard.getInstance().startCameraStream(webCam, 0);
+//
+//        webCam.setPipeline(detector1);
 
         EditingMode editingMode = EditingMode.None;
 
@@ -96,7 +92,7 @@ public class Auto extends LinearOpMode {
         robot.closeRight();
 
         waitForStart();
-        webCam.stopStreaming();
+//        webCam.stopStreaming();
 
         State state = State.Drive_To_Basket;
         while (opModeIsActive() & !isStopRequested()) {
@@ -139,8 +135,8 @@ public class Auto extends LinearOpMode {
                         robot.ArmMotor.setTargetPosition(200);
                         robot.ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         robot.ArmMotor.setPower(.7);
-                        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
-                        webCam.setPipeline(detector2);
+//                        webCam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+//                        webCam.setPipeline(detector2);
                         state = State.Grab_Cone;
                     }
                     break;

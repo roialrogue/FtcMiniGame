@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.util.Range;
 public class TeleOp extends LinearOpMode {
     Hardware robot;
 
+
+
     @Override
     public void runOpMode() {
         robot = new Hardware(hardwareMap, telemetry);
@@ -56,6 +58,8 @@ public class TeleOp extends LinearOpMode {
             } else {
                 robot.ArmMotor.setPower(0);
             }
+
+            telemetry.addData("Heading", robot.drivebase.getHeading());
         }
     }
 }
